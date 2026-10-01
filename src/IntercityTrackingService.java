@@ -7,4 +7,17 @@ public class IntercityTrackingService implements TrackingService{
 
         return status;
     }
+    @Override
+    public String recordEvent(
+            String shipmentId,
+            String route,
+            DeliveryEvent event
+    ) {
+        String message = "Regional sorting center notified: " + event
+                + ", shipment: " + shipmentId
+                + ", route: " + route;
+
+        System.out.println(message);
+        return message;
+    }
 }

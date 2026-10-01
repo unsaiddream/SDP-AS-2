@@ -12,7 +12,25 @@ public class DeliveryApplication {
         try {
             DeliveryFactory factory = DeliveryFactorySelector.select(family);
             DeliveryService service = new DeliveryService(factory);
-            service.deliver(parcel);
+            String deliveryStatus = service.deliver(parcel);
+            System.out.println("Delivery result: " + deliveryStatus);
+
+            Parcel updatedParcel = new Parcel(
+                    parcel.getId(),
+                    parcel.getOrigin(),
+                    "New customer address",
+                    parcel.getWeightKg()
+            );
+
+            String rerouteResult = service.reroute(
+                    family.toUpperCase() + "-" + parcel.getId(),
+                    updatedParcel
+            );
+            System.out.println("Reroute result: " + rerouteResult);
+
+            String returnResult = service.returnToSender(parcel);
+            System.out.println("Return result: " + returnResult);
+
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             System.out.println("Use: city, intercity or international");

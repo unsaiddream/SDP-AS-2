@@ -7,4 +7,17 @@ public class CityTrackingService implements TrackingService{
 
         return status;
     }
+    @Override
+    public String recordEvent(
+            String shipmentId,
+            String route,
+            DeliveryEvent event
+    ) {
+        String message = "City courier notified: " + event
+                + ", shipment: " + shipmentId
+                + ", route: " + route;
+
+        System.out.println(message);
+        return message;
+    }
 }
