@@ -30,14 +30,7 @@ public class DeliveryApplication {
                 return;
         }
 
-        DeliveryCreator creator = factory.createDeliveryCreator();
-        RoutePlanner planner = factory.createRoutePlanner();
-        TrackingService tracking = factory.createTrackingService();
-
-        String shipmentId = creator.register(parcel);
-        String route = planner.plan(parcel);
-        String status = tracking.track(shipmentId, route);
-
-        System.out.println("Final status: " + status);
+        DeliveryService service = new DeliveryService(factory);
+        service.deliver(parcel);
     }
 }
