@@ -9,47 +9,19 @@ public class DeliveryApplication {
                 2.5
         );
 
-        String shipmentId;
-        String route;
-        String status;
+        DeliveryFactory factory;
 
         switch (family) {
             case "city":
-                DeliveryCreator cityCreator = new CityDeliveryCreator();
-                CityRoutePlanner cityPlanner = new CityRoutePlanner();
-                CityTrackingService cityTracking = new CityTrackingService();
-
-                shipmentId = cityCreator.register(parcel);
-                route = cityPlanner.plan(parcel);
-                status = cityTracking.track(shipmentId, route);
+                factory = new CityDeliveryFactory();
                 break;
 
             case "intercity":
-                DeliveryCreator intercityCreator = new IntercityDeliveryCreator();
-                IntercityShipmentProcessor intercityProcessor =
-                        new IntercityShipmentProcessor();
-                IntercityRoutePlanner intercityPlanner =
-                        new IntercityRoutePlanner();
-                IntercityTrackingService intercityTracking =
-                        new IntercityTrackingService();
-
-                shipmentId = intercityCreator.register(parcel);
-                route = intercityPlanner.plan(parcel);
-                status = intercityTracking.track(shipmentId, route);
+                factory = new IntercityDeliveryFactory();
                 break;
 
             case "international":
-                DeliveryCreator internationalCreator = new InternationalDeliveryCreator();
-                InternationalShipmentProcessor internationalProcessor =
-                        new InternationalShipmentProcessor();
-                InternationalRoutePlanner internationalPlanner =
-                        new InternationalRoutePlanner();
-                InternationalTrackingService internationalTracking =
-                        new InternationalTrackingService();
-
-                shipmentId = internationalCreator.register(parcel);
-                route = internationalPlanner.plan(parcel);
-                status = internationalTracking.track(shipmentId, route);
+                factory = new InternationalDeliveryFactory();
                 break;
 
             default:
@@ -57,6 +29,14 @@ public class DeliveryApplication {
                 System.out.println("Use: city, intercity or international");
                 return;
         }
+
+        DeliveryCreator creator = factory.createDeliveryCreator();
+        RoutePlanner planner = factory.createRoutePlanner();
+        TrackingService tracking = factory.createTrackingService();
+
+        String shipmentId = creator.register(parcel);
+        String route = planner.plan(parcel);
+        String status = tracking.track(shipmentId, route);
 
         System.out.println("Final status: " + status);
     }
