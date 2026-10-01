@@ -33,7 +33,7 @@ public class DeliveryApplication {
 
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            System.out.println("Use: city, intercity or international");
+            System.out.println("Use: city, intercity, international or express");
         }
     }
 }

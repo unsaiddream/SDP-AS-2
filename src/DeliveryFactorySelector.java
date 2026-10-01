@@ -16,6 +16,9 @@ public class DeliveryFactorySelector {
             case "international":
                 return new InternationalDeliveryFactory();
 
+            case "express":
+                return new ExpressDeliveryFactory();
+
             default:
                 throw new IllegalArgumentException(
                         "Unknown delivery family: " + family
