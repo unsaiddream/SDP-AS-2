@@ -1,4 +1,4 @@
-public class IntercityRoutePlanner {
+public class IntercityRoutePlanner implements RoutePlanner{
     public String plan(Parcel parcel) {
         String route = parcel.getOrigin()
                 + " -> regional sorting center -> "

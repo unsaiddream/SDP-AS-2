@@ -1,4 +1,4 @@
-public class CityRoutePlanner {
+public class CityRoutePlanner implements RoutePlanner {
     public String plan(Parcel parcel) {
         String route = parcel.getOrigin()
                 + " -> local courier hub -> "

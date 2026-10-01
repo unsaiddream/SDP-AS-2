@@ -1,4 +1,4 @@
-public class IntercityTrackingService {
+public class IntercityTrackingService implements TrackingService{
     public String track(String shipmentId, String route) {
         String status = "Arrived at regional sorting center: " + shipmentId;
 

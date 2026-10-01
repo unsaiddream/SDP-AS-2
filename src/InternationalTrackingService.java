@@ -1,4 +1,4 @@
-public class InternationalTrackingService {
+public class InternationalTrackingService implements TrackingService{
     public String track(String shipmentId, String route) {
         String status = "Waiting for customs clearance: " + shipmentId;
 

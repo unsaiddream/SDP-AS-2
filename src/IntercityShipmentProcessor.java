@@ -1,4 +1,4 @@
-public class IntercityShipmentProcessor {
+public class IntercityShipmentProcessor implements ShipmentProcessor{
     public String process(Parcel parcel) {
         String shipmentId = "INTERCITY-" + parcel.getId();
 

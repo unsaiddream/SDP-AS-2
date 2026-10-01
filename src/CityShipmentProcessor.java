@@ -1,4 +1,4 @@
-public class CityShipmentProcessor {
+public class CityShipmentProcessor implements ShipmentProcessor{
     public String process(Parcel parcel) {
         String shipmentId = "CITY-" + parcel.getId();
 
