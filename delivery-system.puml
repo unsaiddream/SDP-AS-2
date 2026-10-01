@@ -1,0 +1,118 @@
+@startuml
+title Delivery System — Factory Method and Abstract Factory
+
+skinparam classAttributeIconSize 0
+left to right direction
+
+interface ShipmentProcessor {
+  +process(parcel: Parcel): String
+}
+
+interface RoutePlanner {
+  +plan(parcel: Parcel): String
+}
+
+interface TrackingService {
+  +track(shipmentId: String, route: String): String
+  +recordEvent(shipmentId: String, route: String, event: DeliveryEvent): String
+}
+
+class Parcel
+enum DeliveryEvent
+
+class CityShipmentProcessor
+class IntercityShipmentProcessor
+class InternationalShipmentProcessor
+class ExpressShipmentProcessor
+
+class CityRoutePlanner
+class IntercityRoutePlanner
+class InternationalRoutePlanner
+class ExpressRoutePlanner
+
+class CityTrackingService
+class IntercityTrackingService
+class InternationalTrackingService
+class ExpressTrackingService
+
+ShipmentProcessor <|.. CityShipmentProcessor
+ShipmentProcessor <|.. IntercityShipmentProcessor
+ShipmentProcessor <|.. InternationalShipmentProcessor
+ShipmentProcessor <|.. ExpressShipmentProcessor
+
+RoutePlanner <|.. CityRoutePlanner
+RoutePlanner <|.. IntercityRoutePlanner
+RoutePlanner <|.. InternationalRoutePlanner
+RoutePlanner <|.. ExpressRoutePlanner
+
+TrackingService <|.. CityTrackingService
+TrackingService <|.. IntercityTrackingService
+TrackingService <|.. InternationalTrackingService
+TrackingService <|.. ExpressTrackingService
+
+abstract class DeliveryCreator {
+  #createProcessor(): ShipmentProcessor
+  +register(parcel: Parcel): String
+}
+
+class CityDeliveryCreator
+class IntercityDeliveryCreator
+class InternationalDeliveryCreator
+class ExpressDeliveryCreator
+
+DeliveryCreator <|-- CityDeliveryCreator
+DeliveryCreator <|-- IntercityDeliveryCreator
+DeliveryCreator <|-- InternationalDeliveryCreator
+DeliveryCreator <|-- ExpressDeliveryCreator
+DeliveryCreator ..> ShipmentProcessor : creates and uses
+
+note right of DeliveryCreator
+  FACTORY METHOD
+  register() contains business logic.
+  Subclasses override createProcessor().
+end note
+
+interface DeliveryFactory {
+  +createShipmentProcessor(): ShipmentProcessor
+  +createRoutePlanner(): RoutePlanner
+  +createTrackingService(): TrackingService
+  +createDeliveryCreator(): DeliveryCreator
+}
+
+class CityDeliveryFactory
+class IntercityDeliveryFactory
+class InternationalDeliveryFactory
+class ExpressDeliveryFactory
+
+DeliveryFactory <|.. CityDeliveryFactory
+DeliveryFactory <|.. IntercityDeliveryFactory
+DeliveryFactory <|.. InternationalDeliveryFactory
+DeliveryFactory <|.. ExpressDeliveryFactory
+
+DeliveryFactory ..> ShipmentProcessor : creates
+DeliveryFactory ..> RoutePlanner : creates
+DeliveryFactory ..> TrackingService : creates
+DeliveryFactory ..> DeliveryCreator : creates
+
+note right of DeliveryFactory
+  ABSTRACT FACTORY
+  Each concrete factory supplies
+  one compatible delivery family.
+end note
+
+class DeliveryFactorySelector
+class DeliveryService {
+  +deliver(parcel: Parcel): String
+  +reroute(shipmentId: String, updatedParcel: Parcel): String
+  +returnToSender(parcel: Parcel): String
+}
+class DeliveryApplication
+
+DeliveryApplication ..> DeliveryFactorySelector : selects family
+DeliveryFactorySelector ..> DeliveryFactory : returns
+DeliveryApplication ..> DeliveryService : creates
+DeliveryService --> DeliveryFactory : uses one factory
+DeliveryService ..> Parcel : processes
+DeliveryService ..> DeliveryEvent : records
+
+@enduml
