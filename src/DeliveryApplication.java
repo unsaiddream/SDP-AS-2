@@ -15,16 +15,17 @@ public class DeliveryApplication {
 
         switch (family) {
             case "city":
-                CityShipmentProcessor cityProcessor = new CityShipmentProcessor();
+                DeliveryCreator cityCreator = new CityDeliveryCreator();
                 CityRoutePlanner cityPlanner = new CityRoutePlanner();
                 CityTrackingService cityTracking = new CityTrackingService();
 
-                shipmentId = cityProcessor.process(parcel);
+                shipmentId = cityCreator.register(parcel);
                 route = cityPlanner.plan(parcel);
                 status = cityTracking.track(shipmentId, route);
                 break;
 
             case "intercity":
+                DeliveryCreator intercityCreator = new IntercityDeliveryCreator();
                 IntercityShipmentProcessor intercityProcessor =
                         new IntercityShipmentProcessor();
                 IntercityRoutePlanner intercityPlanner =
@@ -32,12 +33,13 @@ public class DeliveryApplication {
                 IntercityTrackingService intercityTracking =
                         new IntercityTrackingService();
 
-                shipmentId = intercityProcessor.process(parcel);
+                shipmentId = intercityCreator.register(parcel);
                 route = intercityPlanner.plan(parcel);
                 status = intercityTracking.track(shipmentId, route);
                 break;
 
             case "international":
+                DeliveryCreator internationalCreator = new InternationalDeliveryCreator();
                 InternationalShipmentProcessor internationalProcessor =
                         new InternationalShipmentProcessor();
                 InternationalRoutePlanner internationalPlanner =
@@ -45,7 +47,7 @@ public class DeliveryApplication {
                 InternationalTrackingService internationalTracking =
                         new InternationalTrackingService();
 
-                shipmentId = internationalProcessor.process(parcel);
+                shipmentId = internationalCreator.register(parcel);
                 route = internationalPlanner.plan(parcel);
                 status = internationalTracking.track(shipmentId, route);
                 break;
