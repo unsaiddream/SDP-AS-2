@@ -1,0 +1,15 @@
+package delivery.family.city;
+
+import delivery.core.RoutePlanner;
+import delivery.model.Parcel;
+
+public class CityRoutePlanner implements RoutePlanner {
+    public String plan(Parcel parcel) {
+        String route = parcel.getOrigin()
+                + " -> local courier hub -> "
+                + parcel.getDestination();
+
+        System.out.println("City route: " + route);
+        return route;
+    }
+}

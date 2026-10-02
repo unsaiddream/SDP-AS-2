@@ -1,9 +1,0 @@
-public interface DeliveryFactory {
-    ShipmentProcessor createShipmentProcessor();
-
-    RoutePlanner createRoutePlanner();
-
-    TrackingService createTrackingService();
-
-    DeliveryCreator createDeliveryCreator();
-}

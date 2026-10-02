@@ -4,9 +4,18 @@ A Java application demonstrating Factory Method and Abstract Factory through cit
 
 ## How to run
 
-Run `DeliveryApplication` with one program argument: `city`, `intercity`, `international`, or `express`. If no argument is supplied, the application uses `city`.
+Run `delivery.app.DeliveryApplication` with one program argument: `city`, `intercity`, `international`, or `express`. If no argument is supplied, the application uses `city`.
 
 Each run demonstrates three operations: dispatching a parcel, changing its route, and returning it to the sender.
+
+## Project structure
+
+- `src/delivery/app` — application entry point.
+- `src/delivery/model` — parcel data and delivery events.
+- `src/delivery/core` — product interfaces, factory interface, and Factory Method creator.
+- `src/delivery/service` — factory selection and business operations.
+- `src/delivery/family` — implementations grouped by city, intercity, international, and express delivery.
+- `test/delivery` — JUnit tests.
 
 ## Design before factories
 
